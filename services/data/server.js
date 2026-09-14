@@ -1436,15 +1436,24 @@ app.post('/platform/openai-key', (req, res) => {
 // that guards rows and files. Nothing new is exposed to the internet beyond what
 // the secret already unlocks.
 
+// 🔒 ИИ-БРАУЗЕР ВОШЁЛ В ОДНУ ДВЕРЬ (шаг 195-7, 2026-09-14). Решение владельца: «Маршрут слоя данных» — службы
+// обращаются друг к другу только через API, и память зовёт браузер не его портом, а `/service/ai-browser/*`.
+// Адрес по умолчанию стоит здесь, в коде: установщик пишет в `.env` только прежние три адреса, и новому серверу
+// правка установщика не нужна.
 const INTERNAL = {
   rag:      process.env.LIGHTRAG_URL ?? 'http://127.0.0.1:9621',
   geo:      process.env.GEO_URL      ?? 'http://127.0.0.1:3400',
   channels: process.env.CHANNELS_URL ?? 'http://127.0.0.1:3500',
+  'ai-browser': process.env.AI_BROWSER_URL ?? 'http://127.0.0.1:3800',
 }
 const RAG_KEY = process.env.LIGHTRAG_API_KEY ?? ''
 
-async function proxy(target, extraHeaders, req, res) {
-  const tail = req.originalUrl.replace(new RegExp('^\\/service\\/[a-z]+'), '') || '/'
+// 🔒 ПРЕДЕЛ ОЖИДАНИЯ — ПАРАМЕТР, ПО УМОЛЧАНИЮ ПРЕЖНИЕ 120 С. ИИ-браузер открывает до 10 страниц строго по очереди и
+// сам перезапускает зависший движок — это минуты, а не секунды; общий предел обрывал бы честную работу кодом 503.
+async function proxy(target, extraHeaders, req, res, timeoutMs = 120000) {
+  // 🔒 ИМЯ СЛУЖБЫ БЫВАЕТ С ДЕФИСОМ (`ai-browser`). Прежний образец `[a-z]+` отрезал бы только `ai`, и в службу ушёл бы
+  // путь `-browser/v1/read`. Для `rag`, `geo`, `channels` новый образец равнозначен прежнему — дефисов в них нет.
+  const tail = req.originalUrl.replace(new RegExp('^\\/service\\/[a-z-]+'), '') || '/'
   try {
     const upstream = await fetch(target + tail, {
       method: req.method,
@@ -1453,7 +1462,7 @@ async function proxy(target, extraHeaders, req, res) {
         ...extraHeaders,
       },
       body: ['GET', 'HEAD'].includes(req.method) ? undefined : JSON.stringify(req.body ?? {}),
-      signal: AbortSignal.timeout(120000),
+      signal: AbortSignal.timeout(timeoutMs),
     })
     // 🔒 ДВОИЧНЫЙ ОТВЕТ ЧИТАЕТСЯ БАЙТАМИ, А НЕ ТЕКСТОМ.
     //
@@ -1501,6 +1510,12 @@ app.all(new RegExp('^\\/service\\/geo(\\/.*)?$'), requireAuth, (req, res) =>
 
 app.all(new RegExp('^\\/service\\/channels(\\/.*)?$'), requireAuth, (req, res) =>
   proxy(INTERNAL.channels, {}, req, res))
+
+// 🔒 СЕКРЕТ МАШИНЫ БРАУЗЕРУ ПОДСТАВЛЯЕТ СЛОЙ ДАННЫХ САМ: прокси не переносит входящие заголовки, а замок `/v1/*`
+// ИИ-браузера пускает свои процессы по `x-data-secret` (его `server.mjs`). Тот же приём, что ключ графа выше.
+// 🛑 ПРЕДЕЛ 600 С, А НЕ ОБЩИЕ 120: десять страниц по очереди плюс самолечение движка (шаг 196-8).
+app.all(new RegExp('^\\/service\\/ai-browser(\\/.*)?$'), requireAuth, (req, res) =>
+  proxy(INTERNAL['ai-browser'], { 'x-data-secret': process.env.DATA_SECRET ?? '' }, req, res, 600000))
 
 
 // ── GET /capabilities — служба описывает СЕБЯ САМА ───────────────────────────
