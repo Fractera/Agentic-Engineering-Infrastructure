@@ -58,7 +58,10 @@ export function readServerIp(): string | null {
 // машине и ходит в `127.0.0.1:3700`, ровно как к `data` и `chat`. Память
 // продолжает слушать только петлю. ✗ мой довод «поддомен отменяет петлю» был
 // неверен, и владелец выбрал вопреки ему — правильно.
-export const SUBDOMAINS = ["", "www", "auth", "admin", "data", "chat", "memory"] as const;
+// 🔒 "ai-browser" ДОБАВЛЕН 2026-09-14 (шаг 196-6): служба ИИ-браузера `:3800` — общая для памяти, других служб и агентов;
+// слово владельца 2026-09-13: «получит под себя собственность субдомен: ai-browser.aifa.dev». Как и у памяти, служба
+// слушает только петлю, а поддомен — это nginx на той же машине. Порт назван в `PROXY_PORTS` той же правкой.
+export const SUBDOMAINS = ["", "www", "auth", "admin", "data", "chat", "memory", "ai-browser"] as const;
 
 export function hostFor(prefix: string, domain: string): string {
   return prefix ? `${prefix}.${domain}` : domain;

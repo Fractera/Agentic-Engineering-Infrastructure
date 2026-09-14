@@ -385,7 +385,8 @@
         "admin": "this panel",
         "data": "media and database",
         "chat": "AI chat",
-        "memory": "memory service journal"
+        "memory": "memory service journal",
+        "ai-browser": "AI browser for services and agents"
       },
       "step": "Step {n}",
       "done": "done",
@@ -3831,7 +3832,8 @@
         "admin": "эта панель",
         "data": "медиа и база",
         "chat": "чат с ИИ-агентом",
-        "memory": "журнал службы памяти"
+        "memory": "журнал службы памяти",
+        "ai-browser": "ИИ-браузер для служб и агентов"
       },
       "step": "Шаг {n}",
       "done": "готово",
