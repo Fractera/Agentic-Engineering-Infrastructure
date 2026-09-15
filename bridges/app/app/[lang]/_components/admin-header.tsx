@@ -18,7 +18,7 @@
 import Link from "next/link";
 import {
   Menu, Globe, MessageSquare, X as XIcon, LogOut, Palette, Languages, Columns3, SlidersHorizontal, PanelTop, PanelBottom,
-  Cookie, Users, ImagePlus, Database, BrainCircuit, Brain, Map as MapIcon, Download, Upload,
+  Cookie, Users, ImagePlus, Database, BrainCircuit, Brain, BookA, Map as MapIcon, Download, Upload,
   Link2, MessagesSquare, Sparkles, GitBranch, Info, History, Settings, BookOpen,
   HelpCircle, PackagePlus, FileText, Target, Boxes, Wrench, Network, BookMarked, GraduationCap,
   ListChecks, AlertTriangle, Search, Bot, Rocket, Smartphone, Paintbrush, LayoutTemplate, Ruler, LifeBuoy, Compass, Code2, ChevronRight, Crop, Scissors, Mic, Hourglass, FlaskConical, UserRound, IdCard, Workflow, Radar, MonitorSmartphone, Type, ALargeSmall, Frame, TruckIcon, type LucideIcon } from "lucide-react";
@@ -47,6 +47,9 @@ const ICONS: Record<AdminPageSlug, LucideIcon> = {
   database: Database,
   "vector-memory": BrainCircuit,
   "agentic-rag": Brain,
+  // Словарь, а не мозг: реестр признаков отвечает на вопрос «какие слова память понимает», и
+  // соседство с графом и вектором не должно читаться как третье хранилище.
+  "feature-registry": BookA,
   map: MapIcon,
   export: Download,
   import: Upload,
