@@ -252,34 +252,6 @@
       "helpSeparateTitle": "The two do not share storage.",
       "helpSeparate": "The graph lives in this service's own folder; vectors live in the data service's SQLite. To have a document in both, add it to both: you pay each one's ingest and get each one's kind of answer. Nothing is shared but the OpenAI key."
     },
-    "featureRegistry": {
-      "lead": "The dictionary of what memory understands when someone tells it something or asks. A feature is what the caller means — not a place where anything is stored. Definitions live in the memory service's own repository; here you decide which parts of the project use which of them.",
-      "countLabel": "features",
-      "activeLabel": "in use",
-      "retiredLabel": "retired",
-      "listTitle": "The registry",
-      "retiredMark": "retired",
-      "valueType": "value",
-      "aggregate": "accumulates",
-      "depth": "depth",
-      "onMissing": "when missing",
-      "example": "example",
-      "usedBy": "Used by:",
-      "usedByNobody": "nobody yet",
-      "skillHave": "Skill:",
-      "skillPlan": "Skill to be created:",
-      "skillNone": "No skill named for this feature",
-      "element": "Element",
-      "pick": "Pick the features this element uses",
-      "save": "Save connections",
-      "saved": "Connections saved",
-      "failed": "Memory did not accept this",
-      "replaces": "Saving replaces this element's whole set: after it, the element uses exactly what is ticked here.",
-      "selected": "{n} ticked",
-      "unavailable": "Memory did not answer, so the registry cannot be shown. This is a connection problem, not an empty registry.",
-      "consumersUnavailable": "connections unavailable",
-      "definitionsLiveInMemory": "To add, change or retire a feature itself, work in the memory service: its definitions are files in its repository, read and rolled back with a commit. This page only connects the existing ones."
-    },
     "map": {
       "intro": "Maps, routing and address search for your automations — self-hosted on free OpenStreetMap data, any region on Earth, no third-party keys.",
       "serviceNote": "geo service · :3400",
@@ -1491,10 +1463,6 @@
       "agentic-rag": {
         "title": "Agentic RAG",
         "hint": "The knowledge base the agent reads before it answers."
-      },
-      "feature-registry": {
-        "title": "Memory feature registry",
-        "hint": "What memory understands, and which parts of the project use each feature."
       },
       "map": {
         "title": "Map settings",
@@ -3731,34 +3699,6 @@
       "helpSeparateTitle": "Хранилище у них не общее.",
       "helpSeparate": "Граф живёт в собственной папке этой службы, векторы — в SQLite слоя данных. Чтобы документ был в обоих, добавьте его в оба: заплатите приём каждому и получите ответ каждого вида. Общего у них только ключ OpenAI."
     },
-    "featureRegistry": {
-      "lead": "Словарь того, что память понимает, когда ей сообщают или у неё спрашивают. Признак — это то, что имеет в виду зовущий, а не место, где что-то лежит. Определения живут в репозитории самой памяти; здесь вы решаете, какие части проекта какими из них пользуются.",
-      "countLabel": "признаков",
-      "activeLabel": "в работе",
-      "retiredLabel": "снято",
-      "listTitle": "Реестр",
-      "retiredMark": "снят",
-      "valueType": "значение",
-      "aggregate": "накопление",
-      "depth": "глубина",
-      "onMissing": "если значения нет",
-      "example": "пример",
-      "usedBy": "Пользуются:",
-      "usedByNobody": "пока никто",
-      "skillHave": "Навык:",
-      "skillPlan": "Навык будет создан:",
-      "skillNone": "Навык для этого признака не назван",
-      "element": "Элемент",
-      "pick": "Отметьте признаки, которыми пользуется этот элемент",
-      "save": "Сохранить подключения",
-      "saved": "Подключения сохранены",
-      "failed": "Память это не приняла",
-      "replaces": "Сохранение заменяет весь набор этого элемента: после него элемент пользуется ровно тем, что отмечено здесь.",
-      "selected": "отмечено: {n}",
-      "unavailable": "Память не ответила, и реестр показать нечем. Это обрыв связи, а не пустой реестр.",
-      "consumersUnavailable": "подключения недоступны",
-      "definitionsLiveInMemory": "Чтобы завести, изменить или снять сам признак, работайте в службе памяти: её определения — файлы её репозитория, они читаются глазами и откатываются коммитом. Эта страница только подключает уже существующие."
-    },
     "map": {
       "intro": "Карты, маршруты и поиск по адресу для ваших автоматизаций — свои, на бесплатных данных OpenStreetMap, любой регион мира, без чужих ключей.",
       "serviceNote": "гео-служба · :3400",
@@ -4970,10 +4910,6 @@
       "agentic-rag": {
         "title": "Агентный RAG",
         "hint": "База знаний, которую агент читает перед ответом."
-      },
-      "feature-registry": {
-        "title": "Реестр признаков памяти",
-        "hint": "Что память понимает и какие части проекта каким признаком пользуются."
       },
       "map": {
         "title": "Настройки карты",

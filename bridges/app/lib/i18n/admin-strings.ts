@@ -300,25 +300,6 @@ export type AdminStrings = {
     helpWeakTitle: string; helpWeak: string;
     helpSeparateTitle: string; helpSeparate: string;
   };
-  /**
-   * Реестр признаков памяти (шаг памяти 205-6): что память понимает и кто этим пользуется.
-   *
-   * 🔒 СЛОВ О ХРАНЕНИИ ЗДЕСЬ НЕТ И НЕ БУДЕТ — ни «таблица», ни «колонка», ни «граф». Память отдаёт
-   * наружу СМЫСЛ признака, а где он лежит, не рассказывает (её закон первый); словарь экрана,
-   * заговоривший о хранилище, сделал бы карту хранилища из каталога смыслов.
-   */
-  featureRegistry: {
-    lead: string;
-    countLabel: string; activeLabel: string; retiredLabel: string;
-    listTitle: string; retiredMark: string;
-    valueType: string; aggregate: string; depth: string; onMissing: string; example: string;
-    usedBy: string; usedByNobody: string;
-    skillHave: string; skillPlan: string; skillNone: string;
-    element: string; pick: string; save: string; saved: string; failed: string;
-    replaces: string; selected: string;
-    unavailable: string; consumersUnavailable: string;
-    definitionsLiveInMemory: string;
-  };
   map: {
     intro: string; serviceNote: string; loadError: string;
     osrm: string; geocoder: string; currentRegion: string; downloading: string;
