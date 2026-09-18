@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fractera.ai/schema/own-service-props.json",
+  "title": "OWN-SERVICE-PROPS",
+  "description": "What one microservice declares about ITSELF. Generated from core/service-props/service-props.decl.mjs — do not edit by hand.",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "typed name of the service; the closed list of first segments of a source path",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "api": {
+      "type": "string",
+      "description": "public API address, `<domain>` as a placeholder — the registry is the same on every server, the domain is not"
+    },
+    "about": {
+      "type": "string",
+      "description": "what the service does, in English, for a human and for a model",
+      "minLength": 10
+    },
+    "author": {
+      "type": "string",
+      "description": "who made it"
+    },
+    "price": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "price, or null when it is not sold"
+    },
+    "for_sale": {
+      "type": "boolean",
+      "description": "whether it is offered for sale at all"
+    },
+    "subdomain": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "its own subdomain, or null when it answers over the loopback only",
+      "pattern": "^[a-z0-9-]*$"
+    },
+    "port": {
+      "type": "integer",
+      "description": "the port it listens on",
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "auth": {
+      "type": "string",
+      "description": "how people get in",
+      "enum": [
+        "global",
+        "own",
+        "provider"
+      ]
+    },
+    "manage": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "where a person configures it, or null when it has no page of its own"
+    },
+    "topics": {
+      "type": "array",
+      "description": "word stems that mean «this request is about that service»; read by the router of foreign requests",
+      "items": {
+        "type": "string"
+      }
+    },
+    "channels": {
+      "type": "object",
+      "description": "direct addresses in messengers; `{}` means the service said it has none yet",
+      "properties": {
+        "telegram": {
+          "type": "object",
+          "description": "a Telegram bot of this service: { bot: \"@name\", url: \"https://t.me/name\" }",
+          "properties": {
+            "bot": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "bot",
+            "url"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "api",
+    "about",
+    "author",
+    "price",
+    "for_sale",
+    "subdomain",
+    "port",
+    "auth",
+    "manage",
+    "topics",
+    "channels"
+  ],
+  "additionalProperties": false
+}

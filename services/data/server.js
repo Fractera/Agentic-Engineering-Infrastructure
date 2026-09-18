@@ -1450,6 +1450,10 @@ const INTERNAL = {
   channels: process.env.CHANNELS_URL ?? 'http://127.0.0.1:3500',
   'ai-browser': process.env.AI_BROWSER_URL ?? 'http://127.0.0.1:3800',
   memory:   process.env.MEMORY_URL   ?? 'http://127.0.0.1:3700',
+  // 🔒 ПАНЕЛЬ ВОШЛА В ТУ ЖЕ ДВЕРЬ (227-4). Карту микросервисов собирает она — значит её спрашивает
+  // каждая служба, и спрашивать обязана здесь: порт `3002` в коде чужой службы означал бы второй
+  // адрес и второй ключ у каждого потребителя. Дверь панели читающая, записи снаружи нет.
+  panel:    process.env.PANEL_URL    ?? 'http://127.0.0.1:3002',
 }
 const RAG_KEY = process.env.LIGHTRAG_API_KEY ?? ''
 
@@ -1530,6 +1534,12 @@ app.all(new RegExp('^\\/service\\/ai-browser(\\/.*)?$'), requireAuth, (req, res)
 // отказ выглядел бы как молчание памяти, а не как её же таймаут.
 app.all(new RegExp('^\\/service\\/memory(\\/.*)?$'), requireAuth, (req, res) =>
   proxy(INTERNAL.memory, { 'x-data-secret': process.env.DATA_SECRET ?? '' }, req, res, 300000))
+
+// 🔒 227-4: КАРТА МИКРОСЕРВИСОВ У ПАНЕЛИ. Секрет машины уезжает заголовком — по нему панель отличает
+// свою службу от человека с кукой и от чужого. Замок на входе тот же, что у соседей: `requireAuth`
+// слоя данных; дверь панели за ним ещё раз проверяет, кто спрашивает.
+app.all(new RegExp('^\\/service\\/panel(\\/.*)?$'), requireAuth, (req, res) =>
+  proxy(INTERNAL.panel, { 'x-data-secret': process.env.DATA_SECRET ?? '' }, req, res))
 
 
 // ── GET /capabilities — служба описывает СЕБЯ САМА ───────────────────────────
